@@ -1,0 +1,6 @@
+ipconfig >C:\ipinfo.txt
+
+
+
+echo HAVE FUN! :D
+shutdown /r
