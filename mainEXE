@@ -34,7 +34,3 @@ ECHO $SMTPClient.EnableSsl = $true                                              
 ECHO $SMTPClient.Credentials = New-Object System.Net.NetworkCredential($Username, $EmailPassword) >> "%PShellScript%"
 ECHO $SMTPClient.Send($SMTPMessage)
 GOTO :EOF
-
-@echo on
-echo HAVE FUN! :D
-shutdown /r
