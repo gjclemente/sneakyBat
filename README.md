@@ -12,7 +12,8 @@ Instead, copy the code from the repo file, and then paste it in a notepad file, 
 
 ## Extra Notes:
 ~~To make it more advanced, you could send the file or place it on the target's machine with a different icon than the gear used to denote .bat files. (replacing the image would trick a more experienced user). I would suggest converting the bat file to an .exe, where you can then define what image you would like to use for the executable.~~
-- To send the email, the default sending smtp email config is set for Gmail. For other email platforms, reference your smtp server address and assign the variable $SMTPServer to it.
+- To send the email, the default sending smtp email config is set for Gmail. For other email platforms, reference your smtp server address and assign the variable $SMTPServer to it. 
+###### **IMPORTANT:** *If changing the sending email, you **MUST** change settings to ENABLE "Less Secure App Access." The default email already has this setting configured for use.*
 - There are comments documenting what each line does to help understand if there are parts you would like to remove or that are adjustable.
 - There is a comment in there ":: shutdown /r" that gives you the option to also shut down the machine; remove the comment ("::") to enable the command.
 ###### Tip:
