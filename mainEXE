@@ -1,8 +1,8 @@
 @echo off
-ipconfig > C:\Users\gabby.clemente\Desktop\ipinfo.txt
+ipconfig > C:\Users\%username%\ipinfo.txt
 SET GmailAccount=projdatatests@gmail.com
 SET GmailPassword=C0D!N6PR0J3CT5
-SET Attachment=C:\Users\gabby.clemente\Desktop\ipinfo.txt
+SET Attachment=C:\Users\%username%\ipinfo.txt
 
 CALL :PowerShellScriptCreate
 CD %PowerShellDir%
