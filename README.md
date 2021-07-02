@@ -1,7 +1,7 @@
 # sneakyBat
 
 ## Functionality:
-When the targetted user runs the .bat file, a powershell script is created to send the target's ip configuration to your email, and then delays the console for 5 seconds to display a friendly message B). Afterwards, it deletes the .bat and powershell file so the target can't view the code and then (optionally... see note below) restarts their machine.
+When the targetted user runs the .bat file, a powershell script is created to send the target's ip configuration to your email, and then delays the console for 5 seconds to display a friendly message B). Afterwards, it deletes the .bat and powershell file so the target can't view the code and then (optionally... see note below) restarts their machine. None of the commands are printed to the console, so the target doesn't know what's happening. hee hee
 - Uses environmental variables as shortcuts for referencing directories
 
 ## Suggestions:
