@@ -1,74 +1,31 @@
-ipconfig >C:\ipinfo.txt
 @echo off
+ipconfig > C:\Users\gabby.clemente\Desktop\ipinfo.txt
 SET GmailAccount=projdatatests@gmail.com
 SET GmailPassword=C0D!N6PR0J3CT5
-SET Attachment=C:\ipinfo.txt
+SET Attachment=C:\Users\gabby.clemente\Desktop\ipinfo.txt
 
-CALL :PowerShell
-CD /C "%PowerShellDir%"
-Powershell -ExecutionPolicy Bypass -Command "& '%PShellScript%' '%GmailAccount%' '%GmailPassword%' '%Attachment%'"
-IF EXIST "%~FN0" DEL /Q /F "%~FN0"
-EXIT
+CALL :PowerShellScriptCreate
+CD %PowerShellDir%
+Powershell -ExecutionPolicy Bypass -Command "& {%PShellScript% '%GmailAccount%' '%GmailPassword%' '%Attachment%'}"
+pause
 
-
-:PowerShell
+:PowerShellScriptCreate
 SET PowerShellDir=C:\Windows\System32\WindowsPowerShell\v1.0
-SET PShellScript=%temp%\~sendEmail.ps1
-IF EXIST "%PShellScript%" DEL /Q /F "%PShellScript%"
-
-ECHO $Username      = $args[0]>> "%PShellScript%"
-ECHO $EmailPassword = $args[1]>> "%PShellScript%"
-ECHO $Attachment    = $args[2]>> "%PShellScript%"
-ECHO                          >> "%PShellScript%"
-ECHO $Username    = $Username                 >> "%PShellScript%"
-ECHO $EmailTo     = "dogclemente@gmail.com" >> "%PShellScript%"
-ECHO $EmailFrom   = "projdatatests@gmail.com" >> "%PShellScript%"
-ECHO $Subject     = "IP Address Info CONF File"           >> "%PShellScript%"
-ECHO $Body        = "See attachment for ip info"              >> "%PShellScript%"
-ECHO $SMTPServer  = "smtp.gmail.com"          >> "%PSScript%"
-ECHO $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom, $EmailTo, $Subject, $Body) >> "%PShellScript%"
-ECHO $Attachment  = New-Object System.Net.Mail.Attachment($Attachment)                            >> "%PShellScript%"
-ECHO $SMTPMessage.Attachments.Add($Attachment)                                                    >> "%PShellScript%"
-ECHO $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587)                               >> "%PShellScript%"
-ECHO $SMTPClient.EnableSsl = $true                                                                >> "%PShellScript%"
-ECHO $SMTPClient.Credentials = New-Object System.Net.NetworkCredential($Username, $EmailPassword) >> "%PShellScript%"
-ECHO $SMTPClient.Send($SMTPMessage)
-GOTO :EOF
-
-
-ipconfig > ipinfo.txt
-@echo off
-SET GmailAccount=projdatatests@gmail.com
-SET GmailPassword=C0D!N6PR0J3CT5
-SET Attachment=ipinfo.txt
-
-CALL :PowerShell
-CD /C "%PowerShellDir%"
-Powershell -ExecutionPolicy Bypass -Command "& '%PShellScript%' '%GmailAccount%' '%GmailPassword%' '%Attachment%'"
-
-EXIT /b
-
-:PowerShell
-SET PowerShellDir=C:\Windows\System32\WindowsPowerShell\v1.0
-SET PShellScript=%temp%\~sendEmail.ps1
->"%PShellScript%" (
-	ECHO $Username      = $args[0]>> "%PShellScript%"
-	ECHO $EmailPassword = $args[1]>> "%PShellScript%"
-	ECHO $Attachment    = $args[2]>> "%PShellScript%"
-	ECHO                          >> "%PShellScript%"
-	ECHO $Username    = $Username                 >> "%PShellScript%"
-	ECHO $EmailTo     = "dogclemente@gmail.com" >> "%PShellScript%"
-	ECHO $EmailFrom   = "projdatatests@gmail.com" >> "%PShellScript%"
-	ECHO $Subject     = "IP Address Info CONF File"           >> "%PShellScript%"
-	ECHO $Body        = "See attachment for ip info"              >> "%PShellScript%"
-	ECHO $SMTPServer  = "smtp.gmail.com"          >> "%PShellScript%"
-	ECHO $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom, $EmailTo, $Subject, $Body) >> "%PShellScript%"
-	ECHO $Attachment  = New-Object System.Net.Mail.Attachment($Attachment)                            >> "%PShellScript%"
-	ECHO $SMTPMessage.Attachments.Add($Attachment)                                                    >> "%PShellScript%"
-	ECHO $SMTPClient = New-Object Net.Mail.SmtpClient($SmtpServer, 587)                               >> "%PShellScript%"
-	ECHO $SMTPClient.EnableSsl = $true                                                                >> "%PShellScript%"
-	ECHO $SMTPClient.Credentials = New-Object System.Net.NetworkCredential($Username, $EmailPassword) >> "%PShellScript%"
-	ECHO $SMTPClient.Send($SMTPMessage)
-)
-Exit /B
+SET PShellScript=%temp%\sendEmail.ps1
+(
+ECHO $Username      = $args[0]
+ECHO $EmailPassword = $args[1]
+ECHO $Attach    = $args[2]
+ECHO $EmailTo     = "dogclemente@gmail.com"
+ECHO $EmailFrom   = "projdatatests@gmail.com"
+ECHO $Subject     = "IP Address Info CONF File"
+ECHO $Body        = "See attachment for ip info"
+ECHO $SMTPServer  = "smtp.gmail.com"
+ECHO $SMTPMessage = New-Object System.Net.Mail.MailMessage($EmailFrom, $EmailTo, $Subject, $Body^)
+ECHO $SMTPMessage.Attachments.Add($Attach^)
+ECHO $SMTPClient = New-Object System.Net.Mail.SmtpClient($SmtpServer, 587^)
+ECHO $SMTPClient.EnableSsl = $true
+ECHO $SMTPClient.Credentials = New-Object System.Net.NetworkCredential($Username, $EmailPassword^)
+ECHO $SMTPClient.Send($SMTPMessage^)
+) > %PShellScript%
 GOTO :EOF
