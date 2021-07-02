@@ -7,6 +7,7 @@ When the targetted user runs the .bat file, a powershell script is created to se
 ## Suggestions:
 - I would recommend to not download the zip file, as the formatting is very messy and difficult to read when you open it in notepad.
 Instead, copy the code from the repo file, and then paste it in a notepad file, saving it as a .bat file and giving it a realistic name that a target would run.
+- I also would suggest to run the code without the comments, as it will allow for faster execution time (cmd doesn't have to read and process each commented line).
 - Be sure to first view the code before sending to target in order to set your email address, or if you wanted to make any changes or additions.
 - If you would like to change the email it sends from, change the variables "GmailAccount" and "GmailPassword", which contain the credentials of the email that sends the ip info file (also commented where in the code).
 
